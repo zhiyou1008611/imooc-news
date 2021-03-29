@@ -1,37 +1,46 @@
 <template>
-	<view>
+	<view @click="open">
 		<!-- 图文 -->
-		<view v-if="mode=='base'" class="listcard">
-			<view class="listcard-image"><image src="../../static/logo.png" mode="aspectFill"></image></view>
+		<view v-if="listContent.mode=='base'" class="listcard">
+			<view class="listcard-image"><image :src="listContent.cover[0]" mode="aspectFill"></image></view>
 			<view class="listcard-content">
-				<view class="listcard-content_title"><text>uni-appuni-appuni-appuni-appuni-appuni-appuni-appuni-appuni-appuni-app</text></view>
+				<view class="listcard-content_title">
+					<text>{{listContent.title}}</text>
+					<likes :listContent="listContent"></likes>
+				</view>
 				<view class="listcard-content_des">
-					<view class="listcard-content_des-label"><view class="listcard-content_des-label-item">前端</view></view>
-					<view class="listcard-content_des-browe">120浏览</view>
+					<view class="listcard-content_des-label"><view class="listcard-content_des-label-item">{{listContent.classify}}</view></view>
+					<view class="listcard-content_des-browe">{{listContent.browse_count}}浏览</view>
 				</view>
 			</view>
 		</view>
 		<!-- 多图 -->
-		<view v-if="mode=='column'" class="listcard mode-column">
+		<view v-if="listContent.mode=='column'" class="listcard mode-column">
 			<view class="listcard-content">
-				<view class="listcard-content_title"><text>uni-appuni-appuni-appuni-appuni-appuni-appuni-appuni-appuni-appuni-app</text></view>
+				<view class="listcard-content_title">
+					<text>{{listContent.title}}</text>
+					<likes :listContent="listContent"></likes>
+				</view>
 				<view class="listcard-image">
-					<view class="listcard-image_item" v-for="item in 3"><image src="../../static/logo.png" mode="aspectFill"></image></view>
+					<view class="listcard-image_item" v-if="index<3" v-for="(item,index) in 3" :key="index"><image :src="listContent.cover[index]" mode="aspectFill"></image></view>
 				</view>
 				<view class="listcard-content_des">
-					<view class="listcard-content_des-label"><view class="listcard-content_des-label-item">前端</view></view>
-					<view class="listcard-content_des-browe">120浏览</view>
+					<view class="listcard-content_des-label"><view class="listcard-content_des-label-item">{{listContent.classify}}</view></view>
+					<view class="listcard-content_des-browe">{{listContent.browse_count}}浏览</view>
 				</view>
 			</view>
 		</view>
 		<!-- 大图 -->
-		<view v-if="mode=='image'" class="listcard mode-image">
-			<view class="listcard-image"><image src="../../static/logo.png" mode="aspectFill"></image></view>
+		<view v-if="listContent.mode=='image'" class="listcard mode-image">
+			<view class="listcard-image"><image :src="listContent.cover[0]" mode="aspectFill"></image></view>
 			<view class="listcard-content">
-				<view class="listcard-content_title"><text>uni-appuni-appuni-appuni-appuni-appuni-appuni-appuni-appuni-appuni-app</text></view>
+				<view class="listcard-content_title">
+					<text>{{listContent.title}}</text>
+					<likes :listContent="listContent"></likes>
+				</view>
 				<view class="listcard-content_des">
-					<view class="listcard-content_des-label"><view class="listcard-content_des-label-item">前端</view></view>
-					<view class="listcard-content_des-browe">120浏览</view>
+					<view class="listcard-content_des-label"><view class="listcard-content_des-label-item">{{listContent.classify}}</view></view>
+					<view class="listcard-content_des-browe">{{listContent.browse_count}}浏览</view>
 				</view>
 			</view>
 		</view>
@@ -41,13 +50,18 @@
 <script>
 export default {
 	props: {
-		mode: {
-			type: String,
-			default: 'base'
+		listContent: {
+			type: Object,
+			default(){
+				return {}
+			}
 		}
 	},
 	data() {
 		return {};
+	},
+	methods:{
+		open(){}
 	}
 };
 </script>
@@ -77,10 +91,12 @@ export default {
 		padding-left: 10px;
 		width: 100%;
 		.listcard-content_title {
+			position: relative;
 			font-size: 14px;
 			color: #333333;
 			font-weight: 400;
 			line-height: 1.2;
+			padding-right: 30px;
 			text {
 				overflow: hidden;
 				text-overflow: ellipsis;

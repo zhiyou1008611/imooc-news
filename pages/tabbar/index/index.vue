@@ -3,7 +3,9 @@
 		<!-- 自定义组件 -->
 		<navbar></navbar>
 		<tab :list="tabList" @tab="tab" :tabIndex="tabIndex"></tab>
-		<view class="home-list"><list :tab="tabList" :tabCurrent="tabCurrent" @change="change"></list></view>
+		<view class="home-list">
+			<list :tab="tabList" :tabCurrent="tabCurrent" @change="change">
+		</list></view>
 	</view>
 </template>
 
@@ -24,6 +26,7 @@ export default {
 		getLabel() {
 			this.$api.get_label({ name: 'get_label' }).then(res => {
 				this.tabList = res.data;
+				this.tabList.unshift({name:"全部"})
 			});
 		},
 		tab(data) {
@@ -31,6 +34,7 @@ export default {
 		},
 		change(current) {
 			this.tabIndex = current;
+			this.tabCurrent = current
 		}
 	}
 };

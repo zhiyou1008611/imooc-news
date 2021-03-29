@@ -2,8 +2,16 @@
 	<view class="navbar">
 		<view class="navbar-fixed">
 			<view :style="{ height: statusBarHeight + 'px' }"></view>
-			<view class="navbar-content" :style="{ height: navBarHeight + 'px', width: windowWidth + 'px' }">
-				<view class="navbar-serach">
+			<view class="navbar-content" :class="{search:isSearch}" :style="{ height: navBarHeight + 'px', width: windowWidth + 'px' }" @click.stop="open">
+				<!-- 搜索页 -->
+				<view class="navbar-content_search-icons" v-if="isSearch">
+					<uni-icons type="back" size="20" color="#fff"></uni-icons>
+				</view>
+				<view v-if="isSearch" class="navbar-serach">
+					<input class="navbar-serach_text" type="text" value="" placeholder="请输入搜索内容" />
+				</view>
+				<!-- 首页 -->
+				<view v-else class="navbar-serach">
 					<view class="navbar-serach_icon">
 						<!-- <text class="iconfont icon-search"></text> -->
 						<uni-icons type="search" size="16" color="#999"></uni-icons>
@@ -19,6 +27,12 @@
 <script>
 import uniIcons from '../uni-icons/uni-icons.vue';
 export default {
+	props:{
+		isSearch:{
+			type:Boolean,
+			default: false
+		}
+	},
 	components: { uniIcons },
 	data() {
 		return {
@@ -35,6 +49,14 @@ export default {
 		this.navBarHeight = menuButtonInfo.height + 2 * (menuButtonInfo.top - info.statusBarHeight);
 		this.windowWidth = menuButtonInfo.left;
 		// #endif
+	},
+	methods:{
+		open(){
+			if(this.isSearch) return
+			uni.navigateTo({
+				url: "/pages/home-search/home-search"
+			})
+		}
 	}
 };
 </script>
@@ -70,8 +92,17 @@ export default {
 					margin-right: 10px;
 				}
 				.navbar-serach_text {
-					font-size: 12px;
+					font-size: 14px;
 					color: #999999;
+				}
+			}
+			&.search{
+				padding-left: 0;
+				.navbar-content_search-icons{
+					margin: 0 10px;
+				}
+				.navbar-serach {
+					border-radius: 5px;
 				}
 			}
 		}

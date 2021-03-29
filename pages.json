@@ -22,7 +22,17 @@
 			}
 
 		}
-	],
+	    ,{
+            "path" : "pages/home-search/home-search",
+            "style" :                                                                                    
+            {
+				"navigationStyle":"custom",
+				"navigationBarTitleText": "uni-app",
+				"navigationBarTextStyle":"white"
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
